@@ -82,4 +82,4 @@ Physics     | 4
 - **Database (Extensible):** PyMongo (Atlas)
 ## 🌐 Live Demo
 
-[EduScheduler](https://edusheduler.onrender.com)
+[EduScheduler](https://edusheduler.onrender.com/)
