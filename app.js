@@ -412,6 +412,10 @@ function exportCSV() {
   URL.revokeObjectURL(url);
   toast('Timetable exported as CSV!');
 }
+function printSchedule() {
+  if (!State.schedule) { toast('Nothing to print yet!', 'error'); return; }
+  window.print();
+}
 
 // ═══════════════════════════════════════════════════════════════
 // EVENT HANDLERS
@@ -511,7 +515,10 @@ async function generateTimetable() {
     };
 
     setProgress(100, 'Complete ✓');
-
+    localStorage.setItem('saved_parsed_data', JSON.stringify(State.parsed));
+    localStorage.setItem('saved_schedule', JSON.stringify(State.schedule));
+    localStorage.setItem('saved_lpw', JSON.stringify(State.lecturesPerWeek));
+    
   } catch (err) {
     clearInterval(progressInterval);
     setProgress(0, 'Failed');
@@ -719,4 +726,50 @@ document.addEventListener('DOMContentLoaded', () => {
   // Init hidden sections
   hideSection('config-section');
   hideSection('results-section');
+  
+ const cachedData = localStorage.getItem('saved_parsed_data');
+  const cachedSchedule = localStorage.getItem('saved_schedule');
+  const cachedLPW = localStorage.getItem('saved_lpw'); // Fix #2: Track custom user modifications
+
+  if (cachedData && cachedSchedule) {
+    try {
+      State.parsed = JSON.parse(cachedData);
+      State.schedule = JSON.parse(cachedSchedule);
+      State.lecturesPerWeek = cachedLPW ? JSON.parse(cachedLPW) : (State.parsed.lpwOverrides || {});
+
+      // 1. Render all previews and configurations
+      Render.parsedPreview(State.parsed);
+      Render.lecturesTable(State.parsed.subjects, State.lecturesPerWeek);
+      Render.legend(State.parsed.subjects);
+      
+      // 2. Hydrate Selectors
+      Render.selectorOptions(State.parsed.classes.map(c => c.name), 'class-selector');
+      Render.selectorOptions(State.parsed.faculty.map(f => f.name), 'faculty-selector');
+      Render.selectorOptions(State.parsed.classrooms.map(r => r.name), 'room-selector');
+
+      // 3. Render stats & conflicts
+      Render.stats(State.schedule, State.parsed);
+      Render.conflicts(State.schedule.conflicts);
+
+      // 4. Reveal interface containers
+      showSection('config-section');
+      showSection('results-section');
+      
+      // Fix #1: Fallback to the first entity if selectors defaults are blank on init
+      const defaultClass = document.getElementById('class-selector').value || State.parsed.classes[0]?.name;
+      if (defaultClass) {
+         document.getElementById('class-selector').value = defaultClass;
+      }
+      
+      // 5. Force the UI to draw the chosen default view
+      switchTab('class');
+      
+      toast('⚡ Restored your last generated timetable!');
+    } catch (err) {
+      console.error('Failed to restore cached timetable assets:', err);
+      localStorage.removeItem('saved_parsed_data');
+      localStorage.removeItem('saved_schedule');
+      localStorage.removeItem('saved_lpw');
+    }
+  }
 });
