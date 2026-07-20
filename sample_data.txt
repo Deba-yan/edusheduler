@@ -1,0 +1,47 @@
+[SUBJECTS]
+Mathematics
+Physics
+Chemistry
+Computer Science
+English
+Biology
+History
+Physical Education
+
+[FACULTY]
+Dr. A. Sharma      | Mathematics, Physics
+Dr. B. Patel       | Chemistry, Biology
+Prof. C. Gupta     | Computer Science
+Ms. D. Roy         | English, History
+Mr. E. Verma       | Physical Education
+Dr. F. Mehta       | Mathematics
+Dr. G. Singh       | Physics, Chemistry
+
+[CLASSROOMS]
+Room 101  | 45
+Room 102  | 40
+Room 103  | 38
+Lab A     | 30
+Lab B     | 30
+Hall 1    | 60
+
+[TIMESLOTS]
+Monday    | 09:00-10:00, 10:00-11:00, 11:15-12:15, 12:15-13:15, 14:00-15:00
+Tuesday   | 09:00-10:00, 10:00-11:00, 11:15-12:15, 12:15-13:15, 14:00-15:00
+Wednesday | 09:00-10:00, 10:00-11:00, 11:15-12:15, 12:15-13:15
+Thursday  | 09:00-10:00, 10:00-11:00, 11:15-12:15, 12:15-13:15, 14:00-15:00
+Friday    | 09:00-10:00, 10:00-11:00, 11:15-12:15
+
+[CLASSES]
+Class 10-A | 42
+Class 10-B | 38
+
+[LECTURES_PER_WEEK]
+Mathematics      | 4
+Physics          | 3
+Chemistry        | 3
+Computer Science | 2
+English          | 3
+Biology          | 2
+History          | 2
+Physical Education | 1
