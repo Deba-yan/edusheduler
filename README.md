@@ -2,7 +2,7 @@
 
 A robust web application designed to help educational institutions generate optimal, conflict-free weekly class timetables. Powered by advanced Graph Theory, EduScheduler transforms a simple text dataset into a comprehensive, exportable schedule in seconds.
 
-*You may think why the logo contain july 17 because it is done on that day 😊* 
+*You may think why the logo contain july 17 because it is done on that day 😊 (in mobile) * 
 ---
 
 ## ✨ Overview
