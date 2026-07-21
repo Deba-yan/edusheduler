@@ -604,6 +604,32 @@ async function deleteSchedule(id) {
     toast('Could not delete — server unreachable', 'error');
   }
 }
+//-clear history---------------------------------
+async function clearHistory() {
+  if (!confirm("Delete all previously saved schedules (Clear History)?")) {
+    return;
+  }
+
+  try {
+    const res = await fetch(`${API_BASE}/schedules`);
+    const { data } = await res.json();
+
+    for (const schedule of data) {
+      await fetch(`${API_BASE}/schedules/${schedule._id}`, {
+        method: "DELETE"
+      });
+    }
+
+    localStorage.removeItem("saved_parsed_data");
+    localStorage.removeItem("saved_schedule");
+    localStorage.removeItem("saved_lpw");
+
+    loadHistory();
+    toast("History cleared successfully!");
+  } catch (err) {
+    toast("Failed to clear history", "error");
+  }
+}
 
 // ── Save dataset to MongoDB when file is loaded ───────────────────────────────
 async function saveDatasetToAPI(name, rawText, parsed) {
